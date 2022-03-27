@@ -4,31 +4,45 @@
       @click="drawer = !drawer"
       v-if="auth"
     ></v-app-bar-nav-icon> -->
-
     <v-tabs color="#F34F64">
       <!-- <v-btn text class="withoutuppercase"> My Online Store </v-btn> -->
-
       <v-tabs-slider color="#F34F64"></v-tabs-slider>
 
-      <v-tab class="withoutuppercase"> Shirts </v-tab>
-      <v-tab class="withoutuppercase"> Shoes </v-tab>
+      <v-tab
+        class="withoutuppercase"
+        v-for="(category, i) in categories"
+        v-bind:key="category.id"
+        v-bind:index="i"
+        @click="setCategoryId(category.id)"
+        :active="category.id === $store.state.categoryId ? 'active' : ''"
+      >
+        {{ category.title }}
+      </v-tab>
+
+      <!--
+        v-slot="category.id === $store.state.categoryId ? active : ''"
+
+
+
+        <v-tab class="withoutuppercase"> Shoes </v-tab>
       <v-tab class="withoutuppercase"> Jackets </v-tab>
       <v-tab class="withoutuppercase"> Hats </v-tab>
-      <v-tab class="withoutuppercase"> Trousers </v-tab>
+      <v-tab class="withoutuppercase"> Trousers </v-tab> 
+      -->
     </v-tabs>
-    <v-btn small color="#F34F64">
+    <!-- <v-btn small color="#F34F64">
       <v-icon>mdi-chevron-down</v-icon>
-    </v-btn>
+    </v-btn> -->
     <v-spacer></v-spacer>
     <v-divider vertical inset class="mr-4"></v-divider>
-    <v-text-field
+    <!-- <v-text-field
       label="Search"
       prepend-inner-icon="mdi-magnify"
       dense
       class="mt-10"
-    ></v-text-field>
+    ></v-text-field> -->
     <v-btn text small class="withoutuppercase grey--text">
-      Hi, Aarif Ali Chauhan
+      Hi, Aarif Ali Chauhan {{ cartTotalLength }}
       <v-icon small>mdi-chevron-down</v-icon>
     </v-btn>
     <!-- <v-app-bar-nav-icon
@@ -61,6 +75,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import axios from "axios";
 
 export default Vue.extend({
   name: "Navbar",
@@ -72,7 +87,33 @@ export default Vue.extend({
     drawer: true,
     navLinks: ["Dashboard", "Messages", "Profile", "Updates"],
     auth: true,
+    categoryItemsCount: 0,
+    categories: [],
   }),
+  mounted() {
+    this.getCategories();
+    document.title = "My Online Store";
+  },
+  methods: {
+    async setCategoryId(categoryId: any) {
+      // alert(categoryId);
+      this.$store.commit("setCategoryId", categoryId);
+      localStorage.setItem("categoryId", categoryId);
+    },
+    async getCategories() {
+      this.$store.commit("setIsLoading", true);
+      await axios
+        .get("category")
+        .then((response) => {
+          // console.log(response.data.data);
+          this.categories = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$store.commit("setIsLoading", false);
+    },
+  },
 });
 </script>
 <style>

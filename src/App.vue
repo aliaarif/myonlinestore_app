@@ -45,9 +45,13 @@ export default Vue.extend({
     } else {
       axios.defaults.headers.common["Authorization"] = "";
     }
+    // const categoryId = this.$store.state.categoryId;
+    // const subCategoryId = this.$store.state.subCategoryId;
   },
   mounted() {
     this.cart = this.$store.state.cart;
+    console.log(this.$store.state.categoryId);
+    // console.log(this.$store.state.subCategoryId);
   },
   computed: {
     cartTotalLength(): number {

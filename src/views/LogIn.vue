@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import { toast } from "bulma-toast";
+//import { toast } from "bulma-toast";
 
 export default {
   name: "LogIn",
@@ -88,14 +88,14 @@ export default {
             axios.defaults.headers.common["Authorization"] = "Token " + token;
             localStorage.setItem("token", token);
             const toPath = this.$route.query.to || "/cart";
-            toast({
-              message: "Login Success!",
-              type: "is-success",
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: "bottom-right",
-            });
+            // toast({
+            //   message: "Login Success!",
+            //   type: "is-success",
+            //   dismissible: true,
+            //   pauseOnHover: true,
+            //   duration: 2000,
+            //   position: "bottom-right",
+            // });
             this.$router.push(toPath);
           })
           .catch((error) => {

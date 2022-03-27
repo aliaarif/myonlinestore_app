@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="card_item" elevation="2">
+  <v-card flat class="card_item mt-n12" elevation="8">
     <v-list subheader two-line color="transparent">
       <v-list-item>
         <v-list-item-avatar size="50px">
@@ -9,10 +9,10 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="white--text">
-            Unknown Customer
+            Aarif Ali Chauhan
           </v-list-item-title>
           <v-list-item-subtitle class="grey--text mt-2"
-            >Tab Here to add customer
+            >Premium User
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -47,9 +47,37 @@
             </v-list-item-content>
 
             <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
+              <v-list-item-subtitle class="grey--text">
+                <v-btn icon small color="#f34f64" left>
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+                7
+                <v-btn icon small color="#f34f64" right>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-list-item-subtitle>
+
+              <!-- <div class="buttons has-addons">
+                <button
+                  class="button is-small"
+                  @click="decrementQuantity(item)"
+                >
+                  <span class="icon is-small">
+                    <i class="fas fa-minus"></i>
+                  </span>
+                </button>
+                <button class="button is-small is-info is-selected">
+                  {{ item.quantity }}
+                </button>
+                <button
+                  class="button is-small"
+                  @click="incrementQuantity(item)"
+                >
+                  <span class="icon is-small">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                </button>
+              </div> -->
             </v-list-item-content>
 
             <v-list-item-action>

@@ -5,7 +5,7 @@
   >
     <v-container fluid>
       <v-app-bar dense dark color="transparent" flat>
-        <v-tabs dense color="#F34F64" v-model="tab">
+        <v-tabs dense color="#F34F64" v-model="tab" right>
           <v-tabs-slider color="#F34F64"></v-tabs-slider>
           <v-tab class="withoutuppercase"> Parasut </v-tab>
           <v-tab class="withoutuppercase"> Parka </v-tab>
@@ -13,9 +13,12 @@
           <v-tab class="withoutuppercase"> Dennis </v-tab>
         </v-tabs>
       </v-app-bar>
-      <v-card tile color="transparent" class="my-2 card_global" left>
+      <v-card tile color="transparent" class="my-2 card_global">
         <v-row>
-          <v-col cols="12" sm="8">
+          <v-col cols="12" sm="3">
+            <Payment />
+          </v-col>
+          <v-col cols="12" sm="9">
             <v-tabs-items v-model="tab">
               <v-tab-item>
                 <v-card flat class="card_item pa-2" color="transparent">
@@ -23,9 +26,8 @@
                     <v-col
                       color="transparent"
                       cols="12"
-                      md="3"
-                      sm="2"
-                      v-for="(product, i) in latestProducts"
+                      sm="3"
+                      v-for="(product, i) in products"
                       v-bind:key="product.id"
                       v-bind:index="i"
                     >
@@ -46,9 +48,8 @@
                     <v-col
                       color="transparent"
                       cols="12"
-                      md="3"
-                      sm="2"
-                      v-for="(product, i) in latestProducts"
+                      sm="3"
+                      v-for="(product, i) in products"
                       v-bind:key="product.id"
                       v-bind:index="i"
                     >
@@ -69,9 +70,8 @@
                     <v-col
                       color="transparent"
                       cols="12"
-                      md="3"
-                      sm="2"
-                      v-for="(product, i) in latestProducts"
+                      sm="3"
+                      v-for="(product, i) in products"
                       v-bind:key="product.id"
                       v-bind:index="i"
                     >
@@ -92,26 +92,20 @@
                     <v-col
                       color="transparent"
                       cols="12"
-                      md="3"
-                      sm="2"
-                      v-for="(product, i) in latestProducts"
+                      sm="3"
+                      v-for="(product, i) in products"
                       v-bind:key="product.id"
                       v-bind:index="i"
                     >
-                      <div>
-                        <ProductBox
-                          v-bind:product="product"
-                          v-bind:key="product.id"
-                        />
-                      </div>
+                      <ProductBox
+                        v-bind:product="product"
+                        v-bind:key="product.id"
+                      />
                     </v-col>
                   </v-row>
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <Payment />
           </v-col>
         </v-row>
       </v-card>
@@ -121,7 +115,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-// import HelloWorld from "../components/HelloWorld.vue";
 import axios from "axios";
 import ProductBox from "../components/ProductBox.vue";
 import Payment from "../components/Payment.vue";
@@ -134,20 +127,22 @@ export default Vue.extend({
     Payment,
   },
   data: () => ({
+    page: 1,
     tab: null,
-    latestProducts: [],
+    products: [],
   }),
   mounted() {
-    this.getLatestProducts();
+    this.getProducts();
     document.title = "My Online Store";
   },
   methods: {
-    async getLatestProducts() {
+    async getProducts() {
       this.$store.commit("setIsLoading", true);
       await axios
-        .get("products")
+        .get("product")
         .then((response) => {
-          this.latestProducts = response.data;
+          // console.log(response.data.data);
+          this.products = response.data.data;
         })
         .catch((error) => {
           console.log(error);

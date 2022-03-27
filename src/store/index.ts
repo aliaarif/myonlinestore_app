@@ -11,6 +11,8 @@ export default new Vuex.Store({
     isAuthenticated: false,
     token: '',
     isLoading: false,
+    categoryId: localStorage.getItem('categoryId') ?? '',
+    subCategoryId: ''
   },
   mutations: {
     initializeStore(state) {
@@ -28,14 +30,23 @@ export default new Vuex.Store({
         state.isAuthenticated = false
       }
 
+
+      if (localStorage.getItem('categoryId')) {
+        state.categoryId = localStorage.getItem('categoryId') ?? ''
+      } else {
+        localStorage.setItem('categoryId', state.categoryId)
+      }
+
+      if (localStorage.getItem('subCategoryId')) {
+        state.subCategoryId = localStorage.getItem('subCategoryId') ?? ''
+      } else {
+        localStorage.setItem('subCategoryId', state.subCategoryId)
+      }
+
     },
     addToCart(state: any, item: any) {
-      //let existingCartLength = state.cart.items.length
-      //console.log(state.cart.items.length);
-      //console.log(item.product._id);
-
-      const exists: any = state.cart.items.filter((i: { product: { _id: any } }) => {
-        return i.product._id === item.product._id
+      const exists: any = state.cart.items.filter((i: { product: { id: any } }) => {
+        return i.product.id === item.product.id
       })
 
       if (exists.length) {
@@ -47,6 +58,12 @@ export default new Vuex.Store({
     },
     setIsLoading(state, status) {
       state.isLoading = status
+    },
+    setCategoryId(state, categoryId) {
+      state.categoryId = categoryId
+    },
+    setSubCategoryId(state, subCategoryId) {
+      state.subCategoryId = subCategoryId
     },
     setToken(state, token) {
       state.token = token

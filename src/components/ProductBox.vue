@@ -39,6 +39,7 @@
           small
           right
           top
+          @click="addToCart(product.id, 'add')"
         >
           <v-icon>mdi-cart</v-icon>
         </v-btn>
@@ -106,7 +107,7 @@ export default Vue.extend({
     // },
     async addToCart(p_id: any, flag: any) {
       await axios
-        .get(`/product/${p_id}`)
+        .get(`products/${p_id}`)
         .then((response) => {
           this.item = response.data.data;
           //console.log(response.data.data.name);

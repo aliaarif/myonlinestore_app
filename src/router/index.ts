@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-// import HomeView from '../views/ExampleView.vue'
+// import Example from '../views/Example.vue'
 
 
 import store from '../store'
 
-import Home from '../views/HomeView.vue'
+//import Home from '../views/Home.vue'
 
 import Product from '../views/Product.vue'
 import Category from '../views/Category.vue'
@@ -23,11 +23,16 @@ import Success from '../views/Success.vue'
 
 Vue.use(VueRouter)
 
+function lazyLoad(view: any) {
+  return () => import(`@/views/${view}.vue`)
+}
+
+
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: lazyLoad('Home')
   },
   {
     path: '/about',
