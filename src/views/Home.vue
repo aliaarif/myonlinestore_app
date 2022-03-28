@@ -5,12 +5,19 @@
   >
     <v-container fluid>
       <v-app-bar dense dark color="transparent" flat>
-        <v-tabs dense color="#F34F64" v-model="tab" right>
+        <v-tabs dense color="#F34F64" v-model="subCategoriesCountFrom" right>
           <v-tabs-slider color="#F34F64"></v-tabs-slider>
-          <v-tab class="withoutuppercase"> Parasut </v-tab>
-          <v-tab class="withoutuppercase"> Parka </v-tab>
-          <v-tab class="withoutuppercase"> Steve </v-tab>
-          <v-tab class="withoutuppercase"> Dennis </v-tab>
+          <v-tab
+            v-for="(subcategory, i) in subcategories"
+            v-bind:key="subcategory.id"
+            v-bind:index="i"
+            @click="setSubCategoryId(subcategory.id)"
+            :active="
+              subcategory.id === $store.state.subCategoryId ? 'active' : ''
+            "
+          >
+            {{ subcategory.title }}
+          </v-tab>
         </v-tabs>
       </v-app-bar>
       <v-card tile color="transparent" class="my-2 card_global">
@@ -19,7 +26,7 @@
             <Payment />
           </v-col>
           <v-col cols="12" sm="9">
-            <v-tabs-items v-model="tab">
+            <v-tabs-items v-model="subCategoriesCountFrom">
               <v-tab-item>
                 <v-card flat class="card_item pa-2" color="transparent">
                   <v-row>
@@ -128,18 +135,37 @@ export default Vue.extend({
   },
   data: () => ({
     page: 1,
-    tab: null,
+    // tab: null,
+    subCategoriesCountFrom: localStorage.getItem("subCategoryId") ?? 0,
+    subcategories: [],
     products: [],
   }),
   mounted() {
+    this.getSubCategories();
     this.getProducts();
     document.title = "My Online Store";
   },
   methods: {
+    async setSubCategoryId(subCategoryId: any) {
+      localStorage.setItem("subCategoryId", subCategoryId);
+    },
+    async getSubCategories() {
+      this.$store.commit("setIsLoading", true);
+      await axios
+        .get("subcategory")
+        .then((response) => {
+          // console.log(response.data.data);
+          this.subcategories = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$store.commit("setIsLoading", false);
+    },
     async getProducts() {
       this.$store.commit("setIsLoading", true);
       await axios
-        .get("product")
+        .get("products")
         .then((response) => {
           // console.log(response.data.data);
           this.products = response.data.data;

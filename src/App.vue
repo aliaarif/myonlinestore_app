@@ -1,7 +1,11 @@
 <template>
   <v-app>
-    <navbar dense v-bind:cartTotalLength="cartTotalLength" />
-    <drawer dense />
+    <navbar
+      dense
+      v-bind:cartTotalLength="cartTotalLength"
+      v-bind:categoriesCountFrom="$store.state.categoryId"
+    />
+    <drawer dense v-bind:selectedBrand="selectedBrand" />
     <v-main>
       <router-view v-slot="{ Component }">
         <transition
@@ -45,13 +49,15 @@ export default Vue.extend({
     } else {
       axios.defaults.headers.common["Authorization"] = "";
     }
-    // const categoryId = this.$store.state.categoryId;
-    // const subCategoryId = this.$store.state.subCategoryId;
+    this.$store.state.brandId;
+    this.$store.state.categoryId;
+    this.$store.state.subCategoryId;
   },
   mounted() {
     this.cart = this.$store.state.cart;
+    console.log(this.$store.state.brandId);
     console.log(this.$store.state.categoryId);
-    // console.log(this.$store.state.subCategoryId);
+    console.log(this.$store.state.subCategoryId);
   },
   computed: {
     cartTotalLength(): number {
@@ -60,6 +66,9 @@ export default Vue.extend({
         totalLength += this.cart.items[i]["quantity"];
       }
       return totalLength;
+    },
+    selectedBrand(): number {
+      return this.$store.state.brandId ? this.$store.state.brandId - 1 : 0;
     },
   },
 });

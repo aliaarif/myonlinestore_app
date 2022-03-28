@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="card_item mt-n12" elevation="8">
+  <v-card flat class="card_item" elevation="8">
     <v-list subheader two-line color="transparent">
       <v-list-item>
         <v-list-item-avatar size="50px">

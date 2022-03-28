@@ -11,11 +11,12 @@ export default new Vuex.Store({
     isAuthenticated: false,
     token: '',
     isLoading: false,
-    categoryId: localStorage.getItem('categoryId') ?? '',
-    subCategoryId: ''
+    brandId: localStorage.getItem('brandId') ?? 0,
+    categoryId: localStorage.getItem('categoryId') ?? 0,
+    subCategoryId: localStorage.getItem('subCategoryId') ?? 0,
   },
   mutations: {
-    initializeStore(state) {
+    initializeStore(state: any) {
       if (localStorage.getItem('cart')) {
         state.cart = JSON.parse(localStorage.getItem('cart') ?? '')
       } else {
@@ -31,14 +32,20 @@ export default new Vuex.Store({
       }
 
 
+      if (localStorage.getItem('brandId')) {
+        state.brandId = localStorage.getItem('brandId') ?? 0
+      } else {
+        localStorage.setItem('brandId', state.brandId)
+      }
+
       if (localStorage.getItem('categoryId')) {
-        state.categoryId = localStorage.getItem('categoryId') ?? ''
+        state.categoryId = localStorage.getItem('categoryId') ?? 0
       } else {
         localStorage.setItem('categoryId', state.categoryId)
       }
 
       if (localStorage.getItem('subCategoryId')) {
-        state.subCategoryId = localStorage.getItem('subCategoryId') ?? ''
+        state.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
       } else {
         localStorage.setItem('subCategoryId', state.subCategoryId)
       }
@@ -58,6 +65,9 @@ export default new Vuex.Store({
     },
     setIsLoading(state, status) {
       state.isLoading = status
+    },
+    setBrandId(state, brandId) {
+      state.brandId = brandId
     },
     setCategoryId(state, categoryId) {
       state.categoryId = categoryId

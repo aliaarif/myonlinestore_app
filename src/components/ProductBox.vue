@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ hover }" close-delay="50">
     <v-card
-      :elevation="hover ? 16 : 1"
+      :elevation="hover ? 8 : 2"
       :class="{ 'on-hover': hover }"
       class="mx-auto"
       color="primary darken-4"
@@ -110,7 +110,7 @@ export default Vue.extend({
         .get(`products/${p_id}`)
         .then((response) => {
           this.item = response.data.data;
-          //console.log(response.data.data.name);
+          console.log(response.data.title);
 
           if (isNaN(this.quantity) || this.quantity < 1) {
             this.quantity = 1;

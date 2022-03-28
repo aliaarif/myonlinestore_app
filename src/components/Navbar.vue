@@ -5,34 +5,25 @@
       v-if="auth"
     ></v-app-bar-nav-icon> -->
     <v-tabs color="#F34F64">
-      <!-- <v-btn text class="withoutuppercase"> My Online Store </v-btn> -->
-      <v-tabs-slider color="#F34F64"></v-tabs-slider>
+      <!-- <v-btn text > My Online Store </v-btn> -->
+      <v-tabs-slider
+        color="#F34F64"
+        v-model="categoriesCountFrom1"
+      ></v-tabs-slider>
 
       <v-tab
-        class="withoutuppercase"
         v-for="(category, i) in categories"
         v-bind:key="category.id"
         v-bind:index="i"
         @click="setCategoryId(category.id)"
-        :active="category.id === $store.state.categoryId ? 'active' : ''"
       >
         {{ category.title }}
       </v-tab>
-
       <!--
         v-slot="category.id === $store.state.categoryId ? active : ''"
-
-
-
-        <v-tab class="withoutuppercase"> Shoes </v-tab>
-      <v-tab class="withoutuppercase"> Jackets </v-tab>
-      <v-tab class="withoutuppercase"> Hats </v-tab>
-      <v-tab class="withoutuppercase"> Trousers </v-tab> 
+        :active="category.id === $store.state.categoryId ? 'active' : ''"
       -->
     </v-tabs>
-    <!-- <v-btn small color="#F34F64">
-      <v-icon>mdi-chevron-down</v-icon>
-    </v-btn> -->
     <v-spacer></v-spacer>
     <v-divider vertical inset class="mr-4"></v-divider>
     <!-- <v-text-field
@@ -81,13 +72,13 @@ export default Vue.extend({
   name: "Navbar",
   props: {
     cartTotalLength: Number,
+    categoriesCountFrom1: String,
   },
 
   data: () => ({
     drawer: true,
-    navLinks: ["Dashboard", "Messages", "Profile", "Updates"],
     auth: true,
-    categoryItemsCount: 0,
+    // categoriesCountFrom: localStorage.getItem("categoryId") ?? 0,
     categories: [],
   }),
   mounted() {
@@ -96,22 +87,12 @@ export default Vue.extend({
   },
   methods: {
     async setCategoryId(categoryId: any) {
-      // alert(categoryId);
-      this.$store.commit("setCategoryId", categoryId);
       localStorage.setItem("categoryId", categoryId);
     },
     async getCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get("category")
-        .then((response) => {
-          // console.log(response.data.data);
-          this.categories = response.data.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$store.commit("setIsLoading", false);
+      await axios.get("category").then((response) => {
+        this.categories = response.data.data;
+      });
     },
   },
 });
