@@ -6,24 +6,28 @@
     class="primary darken-4"
     v-if="auth"
     mini-variant
-    mini-variant-width="50"
+    mini-variant-width="70"
   >
     <span class="d-block text-center logo" color="#f34f64"> M </span>
     <v-list flat class="mt-n4">
-      <v-list-item-group v-model="$parent">
+      <v-list-item-group v-model="selectedBrand">
         <v-list-item
           v-for="(brand, i) in brands"
           :key="i"
           active-class="border"
           v-slot="{ active }"
           :ripple="false"
-          @click="setBrandId(brand.id)"
+          @click="
+            setBrandId(brand.id),
+              $root.$refs.Home.getProducts($store.state.filters),
+              $root.$refs.Navbar.getCategories($store.state.filters)
+          "
         >
           <v-list-item-icon>
             <div :class="active ? 'a' : ''"></div>
             <v-avatar color="transparent" size="30" tile>
               <span
-                class="white--text text-small ml-n2"
+                class="white--text"
                 :color="active ? '#F34F64' : '#778290'"
                 >{{ brand.title }}</span
               >
@@ -39,29 +43,46 @@
 import Vue from "vue";
 import axios from "axios";
 
+import Home from "../views/Home.vue";
+
 export default Vue.extend({
   name: "Drawer",
-  props: {
-    selectedBrand: Number,
-  },
+  // props: {
+  //   selectedBrand: Number,
+  // },
   data: () => ({
     auth: true,
     drawer: null,
-    //brandsCountFrom: 0,
+    selectedBrand: 0,
     brands: [],
   }),
+  beforeMount() {
+    this.selectedBrand = this.$store.state.brandId
+      ? this.$store.state.brandId - 1
+      : 0;
+  },
   mounted() {
     this.getBrands();
   },
   methods: {
     async setBrandId(brandId: any) {
       localStorage.setItem("brandId", brandId);
+      let filters = {
+        brandId: localStorage.getItem("brandId"),
+        categoryId: localStorage.getItem("categoryId"),
+        subCategoryId: localStorage.getItem("subCategoryId"),
+      };
+      this.$store.commit("setFilters", filters);
+      // console.log(JSON.stringify(this.$store.state.filters));
+      //let products = this.$parent.$parent.$emit.getProducts();
+      //console.log(products);
     },
     async getBrands() {
       await axios.get("brands").then((response) => {
         this.brands = response.data.data;
       });
     },
+    //
   },
   computed: {},
 });

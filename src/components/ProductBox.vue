@@ -52,7 +52,11 @@
           {{ product.title }}
         </h4> -->
         <div class="font-weight-light grey--text text-h6 mb-2">
-          ( In {{ product.category.title }} )
+          ( In
+          {{
+            product.category.title === "*" ? "All" : product.category.title
+          }}
+          )
         </div>
 
         <!-- <div class="font-weight-light grey--text text-h6 mb-2">

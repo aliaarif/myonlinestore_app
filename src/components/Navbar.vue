@@ -4,18 +4,18 @@
       @click="drawer = !drawer"
       v-if="auth"
     ></v-app-bar-nav-icon> -->
-    <v-tabs color="#F34F64">
+    <v-tabs color="#F34F64" v-model="selectedCategory" left>
       <!-- <v-btn text > My Online Store </v-btn> -->
-      <v-tabs-slider
-        color="#F34F64"
-        v-model="categoriesCountFrom1"
-      ></v-tabs-slider>
+      <v-tabs-slider color="#F34F64"></v-tabs-slider>
 
       <v-tab
         v-for="(category, i) in categories"
         v-bind:key="category.id"
         v-bind:index="i"
-        @click="setCategoryId(category.id)"
+        @click="
+          setCategoryId(category.id),
+            $root.$refs.Home.getProducts($store.state.filters)
+        "
       >
         {{ category.title }}
       </v-tab>
@@ -72,28 +72,70 @@ export default Vue.extend({
   name: "Navbar",
   props: {
     cartTotalLength: Number,
-    categoriesCountFrom1: String,
+    filters: Object,
   },
 
   data: () => ({
     drawer: true,
     auth: true,
-    // categoriesCountFrom: localStorage.getItem("categoryId") ?? 0,
+    selectedCategory: -1,
     categories: [],
   }),
+  beforeMount() {
+    this.selectedCategory = this.$store.state.categoryId
+      ? this.$store.state.categoryId - 1
+      : -1;
+  },
+  created() {
+    this.$root.$refs.Navbar = this;
+  },
   mounted() {
     this.getCategories();
     document.title = "My Online Store";
   },
+  watch: {
+    filters: function (val) {
+      console.log(val);
+      this.getCategories();
+    },
+  },
   methods: {
     async setCategoryId(categoryId: any) {
       localStorage.setItem("categoryId", categoryId);
+
+      let filters = {
+        brandId: localStorage.getItem("brandId"),
+        categoryId: localStorage.getItem("categoryId"),
+        subCategoryId: localStorage.getItem("subCategoryId"),
+      };
+      this.$store.commit("setFilters", filters);
+      console.log(JSON.stringify(this.$store.state.filters));
     },
     async getCategories() {
-      await axios.get("category").then((response) => {
-        this.categories = response.data.data;
-      });
+      // let filters = {
+      //   brandId: localStorage.getItem("brandId"),
+      //   categoryId: localStorage.getItem("categoryId"),
+      //   subCategoryId: localStorage.getItem("subCategoryId"),
+      // };
+      await axios
+        .get(
+          "category",
+
+          {
+            params: this.filters,
+          }
+        )
+        .then((response) => {
+          this.categories = response.data.data;
+        });
     },
+  },
+  computed: {
+    // selectedCategory(): number {
+    //   return this.$store.state.categoryId
+    // //     ? this.$store.state.categoryId - 1
+    //     : 0;
+    // },
   },
 });
 </script>

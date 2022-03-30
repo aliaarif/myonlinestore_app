@@ -14,6 +14,12 @@ export default new Vuex.Store({
     brandId: localStorage.getItem('brandId') ?? 0,
     categoryId: localStorage.getItem('categoryId') ?? 0,
     subCategoryId: localStorage.getItem('subCategoryId') ?? 0,
+
+    filters: {
+      brandId: localStorage.getItem('brandId') ?? 0,
+      categoryId: localStorage.getItem('categoryId') ?? 0,
+      subCategoryId: localStorage.getItem('subCategoryId') ?? 0,
+    }
   },
   mutations: {
     initializeStore(state: any) {
@@ -34,22 +40,41 @@ export default new Vuex.Store({
 
       if (localStorage.getItem('brandId')) {
         state.brandId = localStorage.getItem('brandId') ?? 0
+        state.filters.brandId = localStorage.getItem('brandId') ?? 0
+        state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
       } else {
         localStorage.setItem('brandId', state.brandId)
-      }
-
-      if (localStorage.getItem('categoryId')) {
-        state.categoryId = localStorage.getItem('categoryId') ?? 0
-      } else {
+        localStorage.setItem('brandId', state.brandId)
         localStorage.setItem('categoryId', state.categoryId)
-      }
-
-      if (localStorage.getItem('subCategoryId')) {
-        state.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
-      } else {
         localStorage.setItem('subCategoryId', state.subCategoryId)
       }
 
+
+      if (localStorage.getItem('subCategoryId')) {
+        state.categoryId = localStorage.getItem('categoryId') ?? 0
+        state.filters.brandId = localStorage.getItem('brandId') ?? 0
+        state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+      } else {
+        localStorage.setItem('categoryId', state.categoryId)
+        localStorage.setItem('brandId', state.brandId)
+        localStorage.setItem('categoryId', state.categoryId)
+        localStorage.setItem('subCategoryId', state.subCategoryId)
+      }
+
+
+      if (localStorage.getItem('subCategoryId')) {
+        state.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+        state.filters.brandId = localStorage.getItem('brandId') ?? 0
+        state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+      } else {
+        localStorage.setItem('subCategoryId', state.subCategoryId)
+        localStorage.setItem('brandId', state.brandId)
+        localStorage.setItem('categoryId', state.categoryId)
+        localStorage.setItem('subCategoryId', state.subCategoryId)
+      }
     },
     addToCart(state: any, item: any) {
       const exists: any = state.cart.items.filter((i: { product: { id: any } }) => {
@@ -74,6 +99,11 @@ export default new Vuex.Store({
     },
     setSubCategoryId(state, subCategoryId) {
       state.subCategoryId = subCategoryId
+    },
+    setFilters(state, filters) {
+      state.filters.brandId = filters.brandId
+      state.filters.categoryId = filters.categoryId
+      state.filters.subCategoryId = filters.subCategoryId
     },
     setToken(state, token) {
       state.token = token

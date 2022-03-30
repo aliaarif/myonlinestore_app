@@ -3,17 +3,19 @@
     <navbar
       dense
       v-bind:cartTotalLength="cartTotalLength"
-      v-bind:categoriesCountFrom="$store.state.categoryId"
+      v-bind:filters="$store.state.filters"
     />
-    <drawer dense v-bind:selectedBrand="selectedBrand" />
+    <drawer dense />
     <v-main>
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component }" v-bind:filters="$store.state.filters">
         <transition
           enter-acitve-class="animate__animated animate__fadeInLeft"
           leave-acitve-class="animate__animated animate__fadeOutLeft"
           mode="out-in"
         >
-          <component :is="Component" />
+          <v-container fluid>
+            <component :is="Component" />
+          </v-container>
         </transition>
       </router-view>
     </v-main>
@@ -49,15 +51,18 @@ export default Vue.extend({
     } else {
       axios.defaults.headers.common["Authorization"] = "";
     }
-    this.$store.state.brandId;
-    this.$store.state.categoryId;
-    this.$store.state.subCategoryId;
+    // this.$store.state.brandId;
+    // this.$store.state.categoryId;
+    // this.$store.state.subCategoryId;
   },
+  // beforeMount() {
+  //   this.selectedCategory = this.$store.state.categoryId
+  // //     ? this.$store.state.categoryId - 1
+  //     : 0;
+  // },
   mounted() {
     this.cart = this.$store.state.cart;
-    console.log(this.$store.state.brandId);
-    console.log(this.$store.state.categoryId);
-    console.log(this.$store.state.subCategoryId);
+    // console.log(JSON.stringify(this.$store.state.filters));
   },
   computed: {
     cartTotalLength(): number {
@@ -66,9 +71,6 @@ export default Vue.extend({
         totalLength += this.cart.items[i]["quantity"];
       }
       return totalLength;
-    },
-    selectedBrand(): number {
-      return this.$store.state.brandId ? this.$store.state.brandId - 1 : 0;
     },
   },
 });
