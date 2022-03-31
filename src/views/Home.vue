@@ -10,7 +10,10 @@
           v-for="(subcategory, i) in subcategories"
           v-bind:key="subcategory.id"
           v-bind:index="i"
-          @click="setSubCategoryId(subcategory.id)"
+          @click="
+            setSubCategoryId(subcategory.id),
+              $root.$refs.Home.getProducts($store.state.filters)
+          "
         >
           {{ subcategory.title }}
         </v-tab>
@@ -171,6 +174,7 @@ export default Vue.extend({
   watch: {
     filters: function (val) {
       console.log(val);
+      this.getSubCategories();
       this.getProducts();
     },
   },
@@ -181,7 +185,13 @@ export default Vue.extend({
     async getSubCategories() {
       this.$store.commit("setIsLoading", true);
       await axios
-        .get("subcategory")
+        .get(
+          "subcategory",
+
+          {
+            params: this.filters,
+          }
+        )
         .then((response) => {
           // console.log(response.data.data);
           this.subcategories = response.data.data;

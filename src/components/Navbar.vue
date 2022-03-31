@@ -14,7 +14,8 @@
         v-bind:index="i"
         @click="
           setCategoryId(category.id),
-            $root.$refs.Home.getProducts($store.state.filters)
+            $root.$refs.Home.getProducts($store.state.filters),
+            $root.$refs.Home.getSubCategories($store.state.filters)
         "
       >
         {{ category.title }}
@@ -97,6 +98,7 @@ export default Vue.extend({
     filters: function (val) {
       console.log(val);
       this.getCategories();
+      //this.getCategories();
     },
   },
   methods: {
