@@ -34,7 +34,7 @@
       class="mt-10"
     ></v-text-field> -->
     <v-btn text small class="withoutuppercase grey--text">
-      Hi, Aarif Ali Chauhan {{ cartTotalLength }}
+      Hi, Aarif Ali Chauhan
       <v-icon small>mdi-chevron-down</v-icon>
     </v-btn>
     <!-- <v-app-bar-nav-icon

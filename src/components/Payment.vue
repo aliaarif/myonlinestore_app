@@ -2,16 +2,25 @@
   <v-card flat class="card_item" elevation="8">
     <v-list subheader two-line color="transparent">
       <v-list-item>
-        <v-list-item-avatar size="50px">
-          <v-icon class="primary darken-4" color="#f34f64" dark>
-            mdi-account-outline
-          </v-icon>
-        </v-list-item-avatar>
+        <v-badge avatar bordered overlap class="mt-5">
+          <template v-slot:badge>
+            <v-avatar size="40">
+              {{ $root.$refs.Home.cartTotalLength }}
+            </v-avatar>
+          </template>
+
+          <v-avatar size="50">
+            <v-icon x-large class="primary darken-4" color="#f34f64" dark>
+              mdi-cart-outline
+            </v-icon>
+          </v-avatar>
+        </v-badge>
+
         <v-list-item-content>
-          <v-list-item-title class="white--text">
-            Aarif Ali Chauhan
+          <v-list-item-title class="white--text ml-8">
+            Your total Items in the cart
           </v-list-item-title>
-          <v-list-item-subtitle class="grey--text mt-2"
+          <v-list-item-subtitle class="grey--text mt-2 ml-8"
             >Premium User
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -23,12 +32,11 @@
       background-color="transparent"
       class="order"
       dark
-      grow
     >
       <!-- <v-tabs-slider color="#f34f64"> </v-tabs-slider> -->
       <v-tabs-slider color="#F34F64"></v-tabs-slider>
-      <v-tab class="withoutuppercase" left> Current Order </v-tab>
-      <v-tab class="withoutuppercase" right>Orders On Hold</v-tab>
+      <v-tab class="withoutuppercase"> Current Order </v-tab>
+      <v-tab class="withoutuppercase">Orders On Hold</v-tab>
     </v-tabs>
 
     <v-divider color="grey" class="divider_tab"></v-divider>
@@ -56,28 +64,6 @@
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </v-list-item-subtitle>
-
-              <!-- <div class="buttons has-addons">
-                <button
-                  class="button is-small"
-                  @click="decrementQuantity(item)"
-                >
-                  <span class="icon is-small">
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </button>
-                <button class="button is-small is-info is-selected">
-                  {{ item.quantity }}
-                </button>
-                <button
-                  class="button is-small"
-                  @click="incrementQuantity(item)"
-                >
-                  <span class="icon is-small">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                </button>
-              </div> -->
             </v-list-item-content>
 
             <v-list-item-action>
@@ -98,171 +84,77 @@
             </v-list-item-content>
 
             <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2"
-                >Brown Casual Shoes</v-list-item-title
-              >
-              <v-list-item-subtitle class="grey--text mt-2"
-                >Shoes</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text ml-10"
-                >1</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-title class="white--text subtitle-2">
-                $87
-              </v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-          <v-divider color="grey" class="divider_tab"></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle class="grey--text"
-                >Discount</v-list-item-subtitle
-              >
-              <v-list-item-title class="white--text subtitle-2 mt-2"
-                >Total</v-list-item-title
-              >
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-list-item-subtitle class="orange--text">
-                -$2
+              <v-list-item-subtitle class="grey--text">
+                <v-btn icon small color="#f34f64" left>
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+                7
+                <v-btn icon small color="#f34f64" right>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
               </v-list-item-subtitle>
-              <v-list-item-title class="green--text subtitle-2 mt-2">
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-list-item-title class="white--text subtitle-2">
+                $87
+              </v-list-item-title>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider color="grey" class="divider_tab"></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="white--text subtitle-2"
+                >Brown Casual Shoes</v-list-item-title
+              >
+              <v-list-item-subtitle class="grey--text mt-2"
+                >Shoes</v-list-item-subtitle
+              >
+            </v-list-item-content>
+
+            <v-list-item-content>
+              <v-list-item-subtitle class="grey--text">
+                <v-btn icon small color="#f34f64" left>
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+                7
+                <v-btn icon small color="#f34f64" right>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-list-item-title class="white--text subtitle-2">
+                $87
+              </v-list-item-title>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider color="grey" class="divider_tab"></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="white--text subtitle-2"
+                >Brown Casual Shoes</v-list-item-title
+              >
+              <v-list-item-subtitle class="grey--text mt-2"
+                >Shoes</v-list-item-subtitle
+              >
+            </v-list-item-content>
+
+            <v-list-item-content>
+              <v-list-item-subtitle class="grey--text">
+                <v-btn icon small color="#f34f64" left>
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+                7
+                <v-btn icon small color="#f34f64" right>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-list-item-title class="white--text subtitle-2">
                 $87
               </v-list-item-title>
             </v-list-item-action>
@@ -407,9 +299,9 @@ import axios from "axios";
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "ProductBox",
+  name: "Payment",
   props: {
-    //product: Object,
+    cartTotalLength: Number,
   },
 
   data: () => ({

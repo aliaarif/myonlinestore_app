@@ -127,6 +127,7 @@ import Payment from "../components/Payment.vue";
 export default Vue.extend({
   name: "Home",
   props: {
+    cartTotalLength: Number,
     filters: Object,
   },
   components: {

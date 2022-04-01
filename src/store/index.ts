@@ -18,7 +18,7 @@ export default new Vuex.Store({
     filters: {
       brandId: localStorage.getItem('brandId') ?? 0,
       categoryId: localStorage.getItem('categoryId') ?? 0,
-      subCategoryId: localStorage.getItem('subCategoryId') ?? 0,
+      subCategoryId: localStorage.getItem('subCategoryId') ?? 1,
     }
   },
   mutations: {
@@ -42,7 +42,7 @@ export default new Vuex.Store({
         state.brandId = localStorage.getItem('brandId') ?? 0
         state.filters.brandId = localStorage.getItem('brandId') ?? 0
         state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
-        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 1
       } else {
         localStorage.setItem('brandId', state.brandId)
         localStorage.setItem('brandId', state.brandId)
@@ -55,7 +55,7 @@ export default new Vuex.Store({
         state.categoryId = localStorage.getItem('categoryId') ?? 0
         state.filters.brandId = localStorage.getItem('brandId') ?? 0
         state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
-        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 1
       } else {
         localStorage.setItem('categoryId', state.categoryId)
         localStorage.setItem('brandId', state.brandId)
@@ -65,10 +65,10 @@ export default new Vuex.Store({
 
 
       if (localStorage.getItem('subCategoryId')) {
-        state.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+        state.subCategoryId = localStorage.getItem('subCategoryId') ?? 1
         state.filters.brandId = localStorage.getItem('brandId') ?? 0
         state.filters.categoryId = localStorage.getItem('categoryId') ?? 0
-        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 0
+        state.filters.subCategoryId = localStorage.getItem('subCategoryId') ?? 1
       } else {
         localStorage.setItem('subCategoryId', state.subCategoryId)
         localStorage.setItem('brandId', state.brandId)
@@ -77,6 +77,7 @@ export default new Vuex.Store({
       }
     },
     addToCart(state: any, item: any) {
+      console.log(item.product.id)
       const exists: any = state.cart.items.filter((i: { product: { id: any } }) => {
         return i.product.id === item.product.id
       })
@@ -97,7 +98,7 @@ export default new Vuex.Store({
     setCategoryId(state, categoryId) {
       state.categoryId = categoryId
     },
-    setSubCategoryId(state, subCategoryId) {
+    setSubCategoryId(state, subCategoryId): void {
       state.subCategoryId = subCategoryId
     },
     setFilters(state, filters) {
@@ -117,8 +118,6 @@ export default new Vuex.Store({
       state.cart = { items: [] }
       localStorage.setItem('cart', JSON.stringify(state.cart))
     },
-
-
   },
   actions: {
   },

@@ -53,10 +53,10 @@
         </h4> -->
         <div class="font-weight-light grey--text text-h6 mb-2">
           ( In
-          {{
-            product.category.title === "*" ? "All" : product.category.title
-          }}
+          {{ product.category.title === "*" ? "All" : product.category.title }}
           )
+
+          {{ product.id }}
         </div>
 
         <!-- <div class="font-weight-light grey--text text-h6 mb-2">
@@ -81,7 +81,9 @@ export default Vue.extend({
   },
 
   data: () => ({
-    item: {},
+    item: {
+      id: null,
+    },
     quantity: 1,
     multiLine: true,
     snackbar: false,
@@ -113,8 +115,8 @@ export default Vue.extend({
       await axios
         .get(`products/${p_id}`)
         .then((response) => {
-          this.item = response.data.data;
-          console.log(response.data.title);
+          this.item = response.data;
+          //console.log(response.data.title);
 
           if (isNaN(this.quantity) || this.quantity < 1) {
             this.quantity = 1;
@@ -124,6 +126,7 @@ export default Vue.extend({
             product: this.item,
             quantity: this.quantity,
           };
+          // console.log(item.product.id);
 
           this.$store.commit("addToCart", item);
           this.snackbar = true;
@@ -143,6 +146,10 @@ export default Vue.extend({
       //   duration: 2000,
       //   position: "bottom-right",
       // });
+    },
+
+    callPaymentMethod(): void {
+      //alert(1);
     },
   },
 });

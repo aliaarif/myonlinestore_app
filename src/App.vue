@@ -7,7 +7,11 @@
     />
     <drawer dense />
     <v-main>
-      <router-view v-slot="{ Component }" v-bind:filters="$store.state.filters">
+      <router-view
+        v-slot="{ Component }"
+        v-bind:filters="$store.state.filters"
+        v-bind:cartTotalLength="cartTotalLength"
+      >
         <transition
           enter-acitve-class="animate__animated animate__fadeInLeft"
           leave-acitve-class="animate__animated animate__fadeOutLeft"
